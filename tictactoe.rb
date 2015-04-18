@@ -5,19 +5,19 @@ end
 
 def draw_board(spaces, space = 10, symbol = nil)
   system_clear
-  
   spaces[space] = symbol
+
   puts "          KEY          "
   puts "       |       |                        |       |       "
   puts "   1   |   2   |   3                #{spaces[1]}   |   #{spaces[2]}   |   #{spaces[3]}   "
   puts "       |       |                        |       |       "
   puts "-------+-------+-------          -------+-------+-------"
   puts "       |       |                        |       |       "
-  puts "   1   |   2   |   3                #{spaces[4]}   |   #{spaces[5]}   |   #{spaces[6]}   "
+  puts "   4   |   5   |   6                #{spaces[4]}   |   #{spaces[5]}   |   #{spaces[6]}   "
   puts "       |       |                        |       |       "
   puts "-------+-------+-------          -------+-------+-------"
   puts "       |       |                        |       |       "
-  puts "   1   |   2   |   3                #{spaces[7]}   |   #{spaces[8]}   |   #{spaces[9]}   "
+  puts "   7   |   8   |   9                #{spaces[7]}   |   #{spaces[8]}   |   #{spaces[9]}   "
   puts "       |       |                        |       |       "
 end
 
@@ -43,7 +43,6 @@ end
 
 def play(player_name)
   system_clear
-
   spaces = {}
   (1..9).each {|space| spaces[space] = ' '}
 
@@ -51,7 +50,6 @@ def play(player_name)
   (1..9).each {|space| empty_spaces[space] = 'Not Empty'}
 
   draw_board(spaces)
-
   whos_turn = who_goes_first
 
   begin
