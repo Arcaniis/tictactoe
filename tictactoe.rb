@@ -43,11 +43,46 @@ def players_turn(spaces, empty_spaces, player_name)
   end
 end
 
+def smart_move(spaces, empty_spaces)
+  # Check for blocking player's winning move
+  x_count = 0
+  space_available = false
+  smart_move = 0
+  chosen_space = nil
+  winning_combinations = [[1,2,3], [4,5,6], [7,8,9], [1,5,9], [7,5,3], [1,4,7], [2,5,8], [3,6,9]]
+  winning_combinations.each do |combination|
+    combination.each do |space|
+      if spaces[space] == 'X'
+        x_count += 1
+      end
+      
+      if spaces[space] == ' '
+        space_available = space
+      end
+
+      if space_available && x_count == 2
+      smart_move = space_available
+      end
+    end
+
+    x_count = 0
+    space_available = false
+
+    if smart_move != 0
+      chosen_space = smart_move
+    else
+      chosen_space = empty_spaces.keys.sample
+    end
+  end
+  # Could add a check before the return for computer to have a winning move...
+  chosen_space
+end
+
 def computers_turn(spaces, empty_spaces)
   draw_board(spaces)
   puts "\nComputer's turn."
   sleep(2)
-  space = empty_spaces.keys.sample
+  space = smart_move(spaces, empty_spaces)
   empty_spaces.delete(space)
   draw_board(spaces, space, 'O')
   if winner_found?(spaces)
