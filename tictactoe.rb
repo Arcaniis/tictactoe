@@ -50,6 +50,7 @@ def smart_move(spaces, empty_spaces)
   smart_move = 0
   chosen_space = nil
   winning_combinations = [[1,2,3], [4,5,6], [7,8,9], [1,5,9], [7,5,3], [1,4,7], [2,5,8], [3,6,9]]
+  
   winning_combinations.each do |combination|
     combination.each do |space|
       if spaces[space] == 'X'
