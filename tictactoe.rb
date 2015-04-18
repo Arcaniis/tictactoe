@@ -1,3 +1,5 @@
+require 'pry'
+
 def system_clear
   system("cls")
   system("clear")
@@ -24,6 +26,33 @@ end
 def who_goes_first
   players = [0,1]
   players.sample
+end
+
+def players_turn(spaces, empty_spaces, player_name)
+  draw_board(spaces)
+  begin
+    puts "\n#{player_name}'s turn."
+    puts "\nChoose which space to place your X:"
+    space = gets.to_i
+  end until empty_spaces.keys.include?(space)
+  empty_spaces.delete(space)
+  draw_board(spaces, space, 'X')
+  if winner_found?(spaces)
+    puts "\nYou Win!"
+    sleep(2)
+  end
+end
+
+def computers_turn(spaces, empty_spaces)
+  draw_board(spaces)
+  puts "\nComputer's turn."
+  sleep(2)
+  space = empty_spaces.keys.sample
+  empty_spaces.delete(space)
+  draw_board(spaces, space, 'O')
+  if winner_found?(spaces)
+    puts "\nComputer wins :("
+  end
 end
 
 def winner_found?(spaces)
@@ -54,35 +83,15 @@ def play(player_name)
 
   begin
     if whos_turn == 0
-      draw_board(spaces)
-      begin
-        puts "\n#{player_name}'s turn."
-        puts "\nChoose which space to place your X:"
-        space = gets.to_i
-      end until empty_spaces.keys.include?(space)
-      empty_spaces.delete(space)
-      draw_board(spaces, space, 'X')
-      winner = winner_found?(spaces)
-      if winner
-        puts "\nYou Win!"
-      end
+      players_turn(spaces, empty_spaces, player_name)
       whos_turn = 1
     else
-      draw_board(spaces)
-      puts "\nComputer's turn."
-      sleep(2)
-      space = empty_spaces.keys.sample
-      empty_spaces.delete(space)
-      draw_board(spaces, space, 'O')
-      winner = winner_found?(spaces)
-      if winner
-        puts "\nComputer wins :("
-      end
+      computers_turn(spaces, empty_spaces)
       whos_turn = 0
     end
-  end until empty_spaces == {} || winner
+  end until empty_spaces == {} || winner_found?(spaces)
 
-  if !winner
+  if !winner_found?(spaces)
     puts "\nTie game!"
   end
 
