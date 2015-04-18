@@ -23,10 +23,10 @@ end
 
 def who_goes_first
   players = [0,1]
-  whos_turn = players.sample
+  players.sample
 end
 
-def winner_found(spaces)
+def winner_found?(spaces)
   someone_won = false
   combination_symbols = []
   winning_combinations = [[1,2,3], [4,5,6], [7,8,9], [1,5,9], [7,5,3], [1,4,7], [2,5,8], [3,6,9]]
@@ -38,7 +38,7 @@ def winner_found(spaces)
     someone_won = true if combination_symbols.count == 1 && !combination_symbols.include?(' ')
     combination_symbols = []
   end
-  return someone_won
+  someone_won
 end
 
 def play(player_name)
@@ -62,8 +62,8 @@ def play(player_name)
       end until empty_spaces.keys.include?(space)
       empty_spaces.delete(space)
       draw_board(spaces, space, 'X')
-      winner = winner_found(spaces)
-      if winner == true
+      winner = winner_found?(spaces)
+      if winner
         puts "\nYou Win!"
       end
       whos_turn = 1
@@ -74,15 +74,15 @@ def play(player_name)
       space = empty_spaces.keys.sample
       empty_spaces.delete(space)
       draw_board(spaces, space, 'O')
-      winner = winner_found(spaces)
-      if winner == true
+      winner = winner_found?(spaces)
+      if winner
         puts "\nComputer wins :("
       end
       whos_turn = 0
     end
-  end until empty_spaces == {} || winner == true
+  end until empty_spaces == {} || winner
 
-  if winner == false
+  if !winner
     puts "\nTie game!"
   end
 
